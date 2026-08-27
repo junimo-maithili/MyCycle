@@ -1,8 +1,17 @@
 import './App.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function App() {
+
+
+const [symptoms, setSymptoms] = useState([]);
+
+  const [periods, setPeriods] = useState(() => {
+    const savedPeriods = localStorage.getItem("periods");
+  
+    return savedPeriods ? JSON.parse(savedPeriods) : [];
+  });
 
   const [date, setDate] = useState("");
   const changeDate = (e) => {
@@ -14,66 +23,125 @@ function App() {
     setFlow(e.target.value);
   };
 
-  const [weight, setWeight] = useState('Light flow');
+  const [weight, setWeight] = useState('');
   const changeWeight = (e) => {
     setWeight(e.target.value);
   };
 
 
-const [symptoms, setSymptoms] = useState([]);
-const symptomOptions = ["s1", "s2", "s3"];
-const [symptomSearch, setSymptomSearch] = useState("");
+// Save data to local storage whenever periods changes
+useEffect(() => {
+  localStorage.setItem("periods", JSON.stringify(periods));
+}, [periods]);
 
-const filteredItems = symptomOptions.filter((symptom) =>
-  symptom.toLowerCase().includes(symptomSearch.toLowerCase())
-);
-
-const addSymptom = (symptom) => {
-  if (!symptoms.includes(symptom)) {
-    setSymptoms((prevSymptoms) => [...prevSymptoms, symptom]);
-  }
-  setSymptomSearch("");
-};
+  // Save data with useState and save to local storage
+  const recordData = (e) => {
+    e.preventDefault();
   
+    const record = {
+      id: crypto.randomUUID(),
+      date: date,
+      flow: flow,
+      weight: flow === "Had period" ? weight : null,
+      symptoms: symptoms,
+    };
+  
+    setPeriods((previousPeriods) => [
+      ...previousPeriods,
+      record
+    ]);
+  
+  };
 
 
 
+
+
+  
   return (
     <>
-      <section id="center">   
+      <section id="center"> 
         <h1>Period Tracker</h1>   
         <p>Track your period with Period Tracker! All information is stored locally on your device, so your cycle information is kept secure.</p> 
 
-        <input type="date" value={date} onChange={changeDate}/>
 
-        <form>
+        <div id="periodForm">
+          <h1>Record period</h1>
+        <input type="date" value={date} onChange={changeDate}/>
+        
+
+        <form onSubmit={recordData}>
           <select value={flow} onChange={changeFlow}>
             <option value="Had period">Had period</option>
             <option value="Spotting">Spotting</option>
             <option value="No flow">No flow</option>
           </select>
-          <button type="submit">Record period</button>
-        </form>
 
+          <br/>
         
 
         {flow === "Had period" && 
           <select value={weight} onChange={changeWeight}>
             <option value="Light">Light flow</option>
-            <option value="Medium">Medium flow</option>
+            <option value="Regular">Regular flow</option>
             <option value="Heavy">Heavy flow</option>
         </select>
         }
 
+<br/>
 
-      <input type="text" value={symptomSearch} onChange={(e) => setSymptomSearch(e.target.value)}/>
-      <ul>
-          {filteredItems.map((item, index) => (
-            <li key={index}>
-              <button onClick={() => addSymptom(item)}>{item}</button>
-            </li>
-          ))}
-      </ul>
+
+      
+      <p>Symptoms</p>
+        <select
+          value={symptoms}
+          onChange={(e) => {
+            const selectedSymptoms = Array.from(
+              e.target.selectedOptions,
+              (option) => option.value
+            );
+
+          setSymptoms(selectedSymptoms);
+          }}
+          multiple>
+            
+          <option value="headache">Headache</option>
+          <option value="cramps">Cramps</option>
+          <option value="bloating">Bloating</option>
+          <option value="fatigue">Fatigue</option>
+        </select>
+
+      
+
+    <br/>
+
+      <button type="submit">Record period</button>
+
+
+      </form>
+
+
+      </div>
+
+
+      {periods.map((period) => (
+  <div key={period.id}>
+    <h3>{period.date}</h3>
+    <p>Flow: {period.flow}</p>
+    <p>Weight: {period.weight}</p>
+
+    <p>Symptoms:</p>
+    <ul>
+  {period.symptoms.map((symptom) => (
+    <li key={symptom}>{symptom}</li>
+  ))}
+</ul>
+
+    
+  </div>
+))}
+
+
 
     </section>
     </>
