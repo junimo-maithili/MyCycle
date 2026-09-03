@@ -2,49 +2,42 @@ import './App.css'
 import { useState, useEffect } from 'react';
 
 import ReactDOM from 'react-dom';
-import { HashRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 
 import Navbar from './components/Navbar.tsx'
 import Log from './components/Log.tsx'
 import Logcopy from './components/Log copy.tsx'
+import Home from './components/Home.tsx'
+
 
 
 function App() {
   
-
-  
   return (
     <>
 
-
-    
-
-    <HashRouter>
+    <BrowserRouter>
 
       <Navbar />
+
+      <h1>Period Tracker</h1>   
+
     
     
-      <section id="center"> 
-
-
-      
-
-        <h1>Period Tracker</h1>   
-        <p>Track your period with Period Tracker! All information is stored locally on your device, so your cycle information is kept secure.</p> 
-
-        <Log></Log>
-      <Logcopy></Logcopy>
-
-
-<br/>
-
-
-
+      <section id="center">
 
     </section>
 
-  </HashRouter>
+
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/log-period" element={<Log />} />
+      <Route path="/view-records" element={<Logcopy/>} />
+    </Routes>
+
+
+  </BrowserRouter>
 
 
     </>

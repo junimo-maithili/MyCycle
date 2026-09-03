@@ -2,11 +2,8 @@
 #center {
   display: flex;
   flex-direction: column;
-  gap: 25px;
   place-content: center;
   place-items: center;
-  flex-grow: 1;
-
 }
 
 
@@ -45,4 +42,14 @@
   text-decoration: none;
   color:azure;
   margin-right:3em;
+}
+
+.periodRecord {
+}
+
+.allRecords {
+  background-color: blue;
+  display: flex;
+  gap: 3em;
+  flex-wrap: wrap;
 }

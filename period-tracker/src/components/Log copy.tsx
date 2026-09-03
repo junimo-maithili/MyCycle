@@ -11,10 +11,10 @@ const Logcopy = () => {
   });
 
   return (
-<div>
+<div className="allRecords">
       
       {periods.map((period) => (
-  <div key={period.id}>
+  <div className="periodRecord" key={period.id}>
     <h3>{period.date}</h3>
     <p>Flow: {period.flow}</p>
     <p>Weight: {period.weight}</p>
