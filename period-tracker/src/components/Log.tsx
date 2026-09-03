@@ -62,14 +62,6 @@ const recordData = (e) => {
   return (
     <div>
 
-
-
-
-
-<h1>Period Tracker</h1>   
-        <p>Track your period with Period Tracker! All information is stored locally on your device, so your cycle information is kept secure.</p> 
-
-
         <div id="periodForm">
           <h1>Record period</h1>
         <input type="date" value={date} onChange={changeDate}/>
@@ -129,22 +121,6 @@ const recordData = (e) => {
       </div>
 
 
-      {periods.map((period) => (
-  <div key={period.id}>
-    <h3>{period.date}</h3>
-    <p>Flow: {period.flow}</p>
-    <p>Weight: {period.weight}</p>
-
-    <p>Symptoms:</p>
-    <ul>
-  {period.symptoms.map((symptom) => (
-    <li key={symptom}>{symptom}</li>
-  ))}
-</ul>
-
-    
-  </div>
-))}
 
 
 
