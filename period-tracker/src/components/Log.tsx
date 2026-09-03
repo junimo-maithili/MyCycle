@@ -1,82 +1,72 @@
-import './App.css'
+import React from 'react'
 import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar.tsx'
-import ReactDOM from 'react-dom';
-import { NavLink } from 'react-router-dom';
-import { HashRouter } from 'react-router-dom';
 
 
-
-function App() {
-  
-
+const Log = () => {
 
 const [symptoms, setSymptoms] = useState([]);
 
-  const [periods, setPeriods] = useState(() => {
-    const savedPeriods = localStorage.getItem("periods");
-  
-    return savedPeriods ? JSON.parse(savedPeriods) : [];
-  });
+const [periods, setPeriods] = useState(() => {
+  const savedPeriods = localStorage.getItem("periods");
 
-  const [date, setDate] = useState("");
-  const changeDate = (e) => {
-    setDate(e.target.value);
-  };
+  return savedPeriods ? JSON.parse(savedPeriods) : [];
+});
 
-  const [flow, setFlow] = useState('No flow');
-  const changeFlow = (e) => {
-    setFlow(e.target.value);
-  };
+const [date, setDate] = useState("");
+const changeDate = (e) => {
+  setDate(e.target.value);
+};
 
-  const [weight, setWeight] = useState('');
-  const changeWeight = (e) => {
-    setWeight(e.target.value);
-  };
+const [flow, setFlow] = useState('No flow');
+const changeFlow = (e) => {
+  setFlow(e.target.value);
+};
+
+const [weight, setWeight] = useState('');
+const changeWeight = (e) => {
+  setWeight(e.target.value);
+};
 
 
 // Save data to local storage whenever periods changes
 useEffect(() => {
-  localStorage.setItem("periods", JSON.stringify(periods));
+localStorage.setItem("periods", JSON.stringify(periods));
 }, [periods]);
 
-  // Save data with useState and save to local storage
-  const recordData = (e) => {
-    e.preventDefault();
-  
-    const record = {
-      id: crypto.randomUUID(),
-      date: date,
-      flow: flow,
-      weight: flow === "Had period" ? weight : null,
-      symptoms: symptoms,
-    };
-  
-    setPeriods((previousPeriods) => [
-      ...previousPeriods,
-      record
-    ]);
-  
+// Save data with useState and save to local storage
+const recordData = (e) => {
+  e.preventDefault();
+
+  const record = {
+    id: crypto.randomUUID(),
+    date: date,
+    flow: flow,
+    weight: flow === "Had period" ? weight : null,
+    symptoms: symptoms,
   };
 
+  setPeriods((previousPeriods) => [
+    ...previousPeriods,
+    record
+  ]);
+
+};
 
 
 
 
-  
+
+
+
+
   return (
-    <>
+    <div>
 
-    <HashRouter>
 
-      <Navbar />
-    
-    
-      <section id="center"> 
 
-      
 
-        <h1>Period Tracker</h1>   
+
+<h1>Period Tracker</h1>   
         <p>Track your period with Period Tracker! All information is stored locally on your device, so your cycle information is kept secure.</p> 
 
 
@@ -158,13 +148,9 @@ useEffect(() => {
 
 
 
-    </section>
-
-  </HashRouter>
-
-
-    </>
+      
+    </div>
   )
 }
 
-export default App
+export default Log
