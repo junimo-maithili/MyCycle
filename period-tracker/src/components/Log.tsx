@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 
 const Log = () => {
 
-const [symptoms, setSymptoms] = useState([]);
+const [symptoms, setSymptoms] = useState(["None"]);
+
 
 const [periods, setPeriods] = useState(() => {
   const savedPeriods = localStorage.getItem("periods");
@@ -12,10 +13,13 @@ const [periods, setPeriods] = useState(() => {
   return savedPeriods ? JSON.parse(savedPeriods) : [];
 });
 
-const [date, setDate] = useState("");
+const currDate = new Date().toISOString().split("T")[0];
+const [date, setDate] = useState(currDate);
 const changeDate = (e) => {
   setDate(e.target.value);
 };
+
+
 
 const [flow, setFlow] = useState('No flow');
 const changeFlow = (e) => {
@@ -50,12 +54,12 @@ const recordData = (e) => {
     record
   ]);
 
+  setDate(currDate);
+  setFlow("No flow");
+  setWeight("");
+  setSymptoms(["None"]);
+
 };
-
-
-
-
-
 
 
 
@@ -67,7 +71,7 @@ const recordData = (e) => {
         <input type="date" value={date} onChange={changeDate}/>
         
 
-        <form onSubmit={recordData}>
+        <form id="logForm" onSubmit={recordData}>
           <select value={flow} onChange={changeFlow}>
             <option value="Had period">Had period</option>
             <option value="Spotting">Spotting</option>

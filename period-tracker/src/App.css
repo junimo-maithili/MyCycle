@@ -45,6 +45,8 @@
 }
 
 .periodRecord {
+  display: center;
+  background-color: purple;
 }
 
 .allRecords {
@@ -55,12 +57,42 @@
 
 .cycle {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
+  background-color:blue;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 1em;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .period {
-  display: flex;
   gap: 1rem;
   overflow-x: auto;
+  background-color:pink;
+  text-align: left;
+  border-radius: 5px;
+  padding: 10px;
+  padding-top: 0px;
+  padding-bottom: 25px;
+  width: 200px;
+  min-height: 180px;
+  box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.period p {
+  margin-left: 10px;
+}
+
+.date {
+  color: blue;
+  background-color: white;
+  border-radius: 0.5em;
+  padding: 5px;
+  text-align: center;
+
 }
