@@ -23,10 +23,18 @@ const changeDate = (e) => {
 
 const [flow, setFlow] = useState('No flow');
 const changeFlow = (e) => {
-  setFlow(e.target.value);
+  const flow = e.target.value
+  setFlow(flow);
+
+  if (flow === "Had period") {
+    setWeight("Light");
+  } else {
+    setWeight("N/A");
+  }
+
 };
 
-const [weight, setWeight] = useState('');
+const [weight, setWeight] = useState('N/A');
 const changeWeight = (e) => {
   setWeight(e.target.value);
 };
@@ -56,7 +64,7 @@ const recordData = (e) => {
 
   setDate(currDate);
   setFlow("No flow");
-  setWeight("");
+  setWeight("N/A");
   setSymptoms(["None"]);
 
 };
@@ -68,7 +76,7 @@ const recordData = (e) => {
 
         <div id="periodForm">
           <h1>Record period</h1>
-        <input type="date" value={date} onChange={changeDate}/>
+        <input type="date" className="dateInput" value={date} onChange={changeDate}/>
         
 
         <form id="logForm" onSubmit={recordData}>
@@ -78,7 +86,6 @@ const recordData = (e) => {
             <option value="No flow">No flow</option>
           </select>
 
-          <br/>
         
 
         {flow === "Had period" && 
@@ -88,12 +95,6 @@ const recordData = (e) => {
             <option value="Heavy">Heavy flow</option>
         </select>
         }
-
-<br/>
-
-
-      
-      <p>Symptoms</p>
         <select
           value={symptoms}
           onChange={(e) => {
@@ -116,7 +117,9 @@ const recordData = (e) => {
 
     <br/>
 
-      <button type="submit">Record period</button>
+      <div className="logSubmit">
+        <button type="submit">Submit!</button>
+      </div>
 
 
       </form>

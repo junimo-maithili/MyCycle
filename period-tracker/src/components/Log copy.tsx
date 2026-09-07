@@ -47,6 +47,7 @@ const cycles = groupPeriods(periods);
 console.log(cycles)
 
   return (
+
 <div className="allRecords">
       
 {cycles.map((cycle, index) => (   

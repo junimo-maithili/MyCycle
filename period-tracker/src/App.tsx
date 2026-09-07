@@ -1,8 +1,5 @@
 import './App.css'
-import { useState, useEffect } from 'react';
-
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 import Navbar from './components/Navbar.tsx'
@@ -21,7 +18,8 @@ function App() {
 
       <Navbar />
 
-      <h1>Period Tracker</h1>   
+      <h1 className="title">MyCycle</h1> 
+      <br/><br/>  
 
     
     
