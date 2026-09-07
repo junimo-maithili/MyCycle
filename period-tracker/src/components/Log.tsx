@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
+import type { ChangeEvent, SubmitEventHandler } from 'react';
 
 
 const Log = () => {
 
+type Period = {
+  id: string;
+  date: string;
+  flow: string;
+  weight: string | null;
+  symptoms: string[];
+};
+
 const [symptoms, setSymptoms] = useState(["None"]);
 
-
-const [periods, setPeriods] = useState(() => {
+const [periods, setPeriods] = useState<Period[]>(() => {
   const savedPeriods = localStorage.getItem("periods");
 
   return savedPeriods ? JSON.parse(savedPeriods) : [];
@@ -14,14 +22,14 @@ const [periods, setPeriods] = useState(() => {
 
 const currDate = new Date().toISOString().split("T")[0];
 const [date, setDate] = useState(currDate);
-const changeDate = (e) => {
+const changeDate = (e: ChangeEvent<HTMLInputElement>) => {
   setDate(e.target.value);
 };
 
 
 
 const [flow, setFlow] = useState('No flow');
-const changeFlow = (e) => {
+const changeFlow = (e: ChangeEvent<HTMLSelectElement>) => {
   const flow = e.target.value
   setFlow(flow);
 
@@ -34,7 +42,7 @@ const changeFlow = (e) => {
 };
 
 const [weight, setWeight] = useState('N/A');
-const changeWeight = (e) => {
+const changeWeight = (e: ChangeEvent<HTMLSelectElement>) => {
   setWeight(e.target.value);
 };
 
@@ -45,8 +53,8 @@ localStorage.setItem("periods", JSON.stringify(periods));
 }, [periods]);
 
 // Save data with useState and save to local storage
-const recordData = (e) => {
-  e.preventDefault();
+const recordData: SubmitEventHandler<HTMLFormElement> = (e) => {
+  e.preventDefault();  e.preventDefault();
 
   const record = {
     id: crypto.randomUUID(),

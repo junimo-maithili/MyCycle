@@ -1,20 +1,22 @@
-import React from 'react'
-import { useState } from 'react';
+import { useState } from 'react'
+
+type Period = {
+  id: string;
+  date: string;
+  flow: string;
+  weight: string | null;
+  symptoms: string[];
+};
+
 
 
 const Logcopy = () => {
 
-  const [periods, setPeriods] = useState(() => {
-    const savedPeriods = localStorage.getItem("periods");
-  
-    return savedPeriods ? JSON.parse(savedPeriods) : [];
-  });
-
   // Function to group periods
-  const groupPeriods = (periods) => {
+  const groupPeriods = (periods: Period[]) => {
   // Sort the periods by date
   const sortedPeriods = [...periods].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  const cycles = [];
+  const cycles: Period[][] = [];
 
   sortedPeriods.forEach((period) => {
     const cycle = cycles[cycles.length - 1]
@@ -42,6 +44,12 @@ const Logcopy = () => {
 
   return cycles
 }
+
+const [periods] = useState<Period[]>(() => {
+  const savedPeriods = localStorage.getItem("periods");
+
+  return savedPeriods ? JSON.parse(savedPeriods) : [];
+});
 
 const cycles = groupPeriods(periods);
 console.log(cycles)
